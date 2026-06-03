@@ -4,8 +4,9 @@ hide_sidebar: true
 
 # AgentSeek
 
-AgentSeek 是一个数据库原生的 Agent Harness，适合那些希望把 agent 运行时数据变成
-一等数据库工作负载的团队。LangChain 是我们推荐的上手方式。
+AgentSeek 是一个数据库原生的 Agent Harness，适合那些希望把智能体运行时数据变成
+一等数据库工作负载的团队。它开放接入任何智能体框架——内置 Bub，当前版本
+开箱即用地支持 LangChain。
 
 > **前置条件：** Python 3.12+、[uv](https://docs.astral.sh/uv/)、一个模型 API key。就这些。
 
@@ -192,6 +193,36 @@ npx skills add ob-labs/agentseek --skill langchain-cn-models --agent claude-code
 
 完整说明：[skills/](https://github.com/ob-labs/agentseek/tree/main/skills)
 | 如何添加 skills：[添加 skill 指南](how-to/add-skills.zh.md)
+
+---
+
+## 接入你的智能体框架
+
+AgentSeek 的设计目标是成为任何智能体框架的底层 harness——不只是 LangChain。如果
+你正在构建一个新的智能体框架，或者维护一个需要持久数据层和语义上下文的框架，
+我们欢迎你接入。Bub 就是一个好例子——它正是通过这种集成模式内置为 AgentSeek
+的原生框架。
+
+**AgentSeek 能为你的框架带来什么：**
+
+- **数据底座** —— checkpoint、持久记忆、向量搜索和混合检索，跑在 OceanBase /
+  seekdb / MySQL 上。你的智能体从第一天起就有持久可查的运行时数据，不用自己造
+  存储层。
+- **语义上下文层** —— ContextSeek 负责记忆积累、检索、渐进式披露和演进。你的
+  框架免费获得跨会话的智能上下文。
+- **生产服务化** —— agentseek-api 实现 Agent Protocol。你的框架的 runnable 可以
+  跑在标准 HTTP 接口后面。
+- **IM 渠道与模板** —— 飞书 / 钉钉 / Slack gateway 和 cookiecutter 项目脚手架，
+  随时为你的框架接入。
+
+**如何集成：**
+
+集成模式和 `agentseek-langchain` 一样——编写一个 contrib 插件，把你框架的
+runnable 桥接进 harness turn pipeline。参见[扩展模型](explanation/extension-model.zh.md)
+和[如何编写 contrib 插件](how-to/author-a-contrib-plugin.zh.md)。
+
+欢迎协作——开一个 [Issue](https://github.com/ob-labs/agentseek/issues) 或往
+`contrib/` 提 PR。
 
 ---
 

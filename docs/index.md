@@ -5,8 +5,9 @@ hide_sidebar: true
 # AgentSeek
 
 AgentSeek is a database-native Agent Harness for teams that want agent runtime
-data to become a first-class database workload. LangChain is the recommended
-way to start building on it.
+data to become a first-class database workload. It is open to any Agent
+Framework — the current version ships with built-in Bub and is
+LangChain-friendly out of the box.
 
 > **Prerequisites:** Python 3.12+, [uv](https://docs.astral.sh/uv/), and a
 > model provider API key. That's it.
@@ -199,6 +200,39 @@ LangChain issue — no manual doc searching needed.
 
 Full details: [skills/](https://github.com/ob-labs/agentseek/tree/main/skills)
 | How to add skills: [Add skills guide](how-to/add-skills.md)
+
+---
+
+## Connect your Agent Framework
+
+AgentSeek is designed to be the harness underneath any Agent Framework — not
+just LangChain. If you are building a new Agent Framework or maintaining one
+that needs a durable data layer and semantic context, we welcome you to
+connect it. Bub is a good example — it ships built-in as AgentSeek's native
+framework through exactly this integration pattern.
+
+**What AgentSeek brings to your framework:**
+
+- **Data substrate** — checkpoint, persistent memory, vector search, and hybrid
+  retrieval on OceanBase / seekdb / MySQL. Your agents get durable, queryable
+  runtime data from day one without you building a storage layer.
+- **Semantic context layer** — ContextSeek handles memory accumulation,
+  retrieval, progressive disclosure, and evolution. Your framework gets
+  cross-session intelligence for free.
+- **Production serving** — agentseek-api implements Agent Protocol. Your
+  framework's runnables can serve behind standard HTTP endpoints.
+- **IM delivery & templates** — Feishu / DingTalk / Slack gateways and
+  cookiecutter project scaffolding, ready for your framework to plug into.
+
+**How to integrate:**
+
+The integration pattern is the same one `agentseek-langchain` follows — a
+contrib plugin that bridges your framework's runnable into the harness turn
+pipeline. See [The extension model](explanation/extension-model.md) and
+[How to author a contrib plugin](how-to/author-a-contrib-plugin.md).
+
+We'd love to collaborate — open an [issue](https://github.com/ob-labs/agentseek/issues)
+or a PR under `contrib/`.
 
 ---
 

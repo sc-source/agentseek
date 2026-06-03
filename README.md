@@ -9,7 +9,7 @@ A database-native Agent Harness, by the [OceanBase](https://en.oceanbase.com/) O
 
 ## What AgentSeek is
 
-AgentSeek is a database-native Agent Harness for teams that want agent runtime data to become a first-class database workload. LangChain is the recommended way to start building on it.
+AgentSeek is a database-native Agent Harness for teams that want agent runtime data to become a first-class database workload. It is open to any Agent Framework — the current version ships with built-in Bub and is LangChain-friendly out of the box.
 
 It treats the database as the natural place to keep agent context, execution history, tool calls, tasks, feedback, and observability together. The same runtime data can then serve debugging, replay, trajectory comparison, evaluation, analysis, and training workflows without being copied into separate systems or re-ingested later.
 
@@ -96,6 +96,12 @@ npx skills add ob-labs/agentseek --all
 ```
 
 Full details: [skills/](skills/)
+
+## Connect your Agent Framework
+
+AgentSeek is designed to be the harness underneath any Agent Framework. If you are building a new framework or maintaining one that needs a durable data layer and semantic context — we welcome you to connect it. Bub is a good example: it ships built-in as AgentSeek's native framework through exactly this pattern. AgentSeek brings the data substrate (OceanBase / seekdb / MySQL), the semantic context layer (ContextSeek), and production serving (agentseek-api) so you don't have to build those yourself.
+
+The integration pattern follows `agentseek-langchain` — a contrib plugin that bridges your runnable into the harness. See [Extension model](docs/explanation/extension-model.md) and [Author a contrib plugin](docs/how-to/author-a-contrib-plugin.md). PRs to `contrib/` welcome.
 
 ## Templates
 
