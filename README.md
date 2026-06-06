@@ -66,12 +66,26 @@ pip install langchain-oceanbase             # MySQL (checkpoint + store)
 
 MySQL users get checkpoint and store out of the box; vector search requires OceanBase or seekdb. Full docs: [langchain-oceanbase](https://github.com/oceanbase/langchain-oceanbase).
 
+### Installing the CLI
+
+```bash
+# Recommended: install as a global tool (isolated env, always on PATH)
+uv tool install agentseek-cli
+
+# One-off without installing:
+uvx --from agentseek-cli agentseek --help
+```
+
+After install, `agentseek create`, `agentseek run`, `agentseek skills add` etc. are available globally.
+
 ### Other paths
 
-AgentSeek ships as two complementary PyPI packages split by job:
+AgentSeek ships as two complementary PyPI packages:
 
-- **`agentseek-cli`** — the **project lifecycle CLI** (`create`, `run`, `build`, `deploy`, `api`, `ctx`, `skills`). Self-contained, installable with `uv tool install agentseek-cli`.
-- **`agentseek`** — the **harness** itself. Provides the runtime CLI (`chat`, `run`, `gateway`, `install`, `update`, …) and the library you embed in your application. Install it with `pip install agentseek`, or use `pip install 'agentseek[cli]'` when you also want the lifecycle CLI in the same environment.
+- **`agentseek-cli`** — the **project lifecycle CLI** (`create`, `run`, `build`, `deploy`, `api`, `ctx`, `skills`). Install with `uv tool install agentseek-cli`.
+- **`agentseek`** — the **harness** runtime (`chat`, `gateway`, `install`, `update`, …) and the library you embed in your application. Install with `pip install agentseek`, or `pip install 'agentseek[cli]'` to bundle both.
+
+When both are installed, `agentseek --help` shows commands in categorized panels: **Project** (create/run/build/deploy), **Services** (api/ctx/skills), **Runtime** (chat/gateway), and **Environment** (install/uninstall/update/onboard/login).
 
 **Already using [Bub](https://github.com/bubbuild/bub)?** AgentSeek is a distribution of Bub with opinionated defaults. Try `agentseek create bub --template default`. See [How AgentSeek relates to Bub](docs/explanation/bub-relationship.md).
 
@@ -91,12 +105,15 @@ Installable guides that live inside your AI coding agent (Claude Code, Cursor, e
 
 | Skill | What it does |
 | --- | --- |
+| **langsmith-trace** | LangSmith CLI setup, tracing, and trace debugging for AgentSeek backends. |
 | **langchain-dev-guide** | LangChain / LangGraph engineering pitfalls and verified fixes. Covers DeepAgents, middleware, streaming, multi-agent orchestration. |
 | **langchain-cn-models** | Step-by-step recipes for integrating Chinese LLM providers (DeepSeek, Qwen, GLM, Moonshot) into LangChain. |
 
 ```bash
-npx skills add ob-labs/agentseek --all
+agentseek skills add --all --global
 ```
+
+Or without the CLI: `npx skills add ob-labs/agentseek --all --global`
 
 Full details: [skills/](skills/)
 
