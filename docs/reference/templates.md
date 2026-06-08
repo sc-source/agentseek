@@ -85,8 +85,7 @@ See `cli.md#agentseek-create-spec` for the full flag table.
 
 ### `bub/default`
 
-Mirrors `examples/ag-ui`. Generates an AG-UI gateway plus a CopilotKit-based
-frontend.
+Generates an AG-UI gateway plus a CopilotKit-based frontend.
 
 | Variable | Description |
 | --- | --- |
@@ -96,6 +95,7 @@ frontend.
 | `default_model` | Default `AGENTSEEK_MODEL`. |
 | `gateway_port` | Default port for `agentseek gateway`. |
 | `frontend_port` | Vite dev server port for the frontend. |
+| `copilotkit_port` | CopilotKit Express runtime port. |
 
 ### `bub/contextseek`
 
@@ -118,7 +118,7 @@ server, and a seed script that preloads example knowledge on first boot.
 
 ### `langchain/default`
 
-Mirrors `examples/ag_ui_langchain`. Generates a `create_agent` project with
+Generates a `create_agent` project with
 CopilotKit middleware bound to agentseek via `agentseek-langchain`.
 
 | Variable | Description |
@@ -128,11 +128,14 @@ CopilotKit middleware bound to agentseek via `agentseek-langchain`.
 | `author` | Project author. |
 | `system_prompt` | System prompt baked into the agent. |
 | `default_model` | Default `AGENTSEEK_MODEL`. |
+| `gateway_port` | Default gateway port for AG-UI. |
+| `frontend_port` | Vite dev server port for the frontend. |
+| `copilotkit_port` | CopilotKit Express runtime port. |
 
 ### `langchain/cli-remote`
 
-Mirrors `examples/langchain_cli_remote_agent`. Runs a graph via
-`langgraph dev` and bridges it through `LangGraphClientRunnable`.
+Runs a graph via `langgraph dev` and bridges it through
+`LangGraphClientRunnable`.
 
 | Variable | Description |
 | --- | --- |
@@ -177,8 +180,8 @@ UI with streaming tool-call cards and join/rejoin support.
 
 ### `deepagents/default`
 
-Mirrors `examples/langchain_deepagents`. Local `create_deep_agent(...)`
-runnable bound to agentseek via `agentseek-langchain`.
+Local `create_deep_agent(...)` runnable bound to agentseek via
+`agentseek-langchain`.
 
 | Variable | Description |
 | --- | --- |

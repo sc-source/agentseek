@@ -82,7 +82,7 @@ sources:
 
 ### `bub/default`
 
-镜像 `examples/ag-ui`。生成一个 AG-UI gateway 以及基于 CopilotKit 的前端。
+生成一个 AG-UI gateway 以及基于 CopilotKit 的前端。
 
 | 变量 | 描述 |
 | --- | --- |
@@ -92,6 +92,7 @@ sources:
 | `default_model` | 默认 `AGENTSEEK_MODEL`。 |
 | `gateway_port` | `agentseek gateway` 的默认端口。 |
 | `frontend_port` | 前端 Vite dev server 端口。 |
+| `copilotkit_port` | CopilotKit Express runtime 端口。 |
 
 ### `bub/contextseek`
 
@@ -114,7 +115,7 @@ sources:
 
 ### `langchain/default`
 
-镜像 `examples/ag_ui_langchain`。生成一个 `create_agent` 项目，通过
+生成一个 `create_agent` 项目，通过
 `agentseek-langchain` 绑定到 agentseek，并附带 CopilotKit middleware。
 
 | 变量 | 描述 |
@@ -124,11 +125,13 @@ sources:
 | `author` | 项目作者。 |
 | `system_prompt` | 烘焙到 agent 中的 system prompt。 |
 | `default_model` | 默认 `AGENTSEEK_MODEL`。 |
+| `gateway_port` | AG-UI 的默认 gateway 端口。 |
+| `frontend_port` | 前端 Vite dev server 端口。 |
+| `copilotkit_port` | CopilotKit Express runtime 端口。 |
 
 ### `langchain/cli-remote`
 
-镜像 `examples/langchain_cli_remote_agent`。通过 `langgraph dev` 运行 graph，
-并通过 `LangGraphClientRunnable` 进行桥接。
+通过 `langgraph dev` 运行 graph，并通过 `LangGraphClientRunnable` 进行桥接。
 
 | 变量 | 描述 |
 | --- | --- |
@@ -173,8 +176,7 @@ Vite + React 前端。
 
 ### `deepagents/default`
 
-镜像 `examples/langchain_deepagents`。通过 `agentseek-langchain` 绑定到 agentseek 的
-本地 `create_deep_agent(...)` runnable。
+通过 `agentseek-langchain` 绑定到 agentseek 的本地 `create_deep_agent(...)` runnable。
 
 | 变量 | 描述 |
 | --- | --- |
