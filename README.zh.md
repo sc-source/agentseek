@@ -60,13 +60,6 @@ agentseek task --list
 - [参考](docs/reference/index.md)
 - [概念](docs/concepts/index.md)
 
-## 相关项目
-
-- [Bub](https://github.com/bubbuild/bub)：默认生成项目使用的 hook-first agent runtime。
-- [ContextSeek](https://github.com/ob-labs/contextseek)：语义记忆、检索和 MCP 集成。
-- [agentseek-api](https://github.com/ob-labs/agentseek-api)：面向生产 LangGraph 服务的 Agent Protocol server。
-- [langchain-oceanbase](https://github.com/oceanbase/langchain-oceanbase)：OceanBase 上的 LangGraph checkpoint、store、向量检索和混合检索。
-
 ## 开发
 
 贡献者从本地源码副本开始：

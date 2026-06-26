@@ -71,13 +71,6 @@ template can expose the same lifecycle commands with different runtimes.
 - [Reference](docs/reference/index.md)
 - [Concepts](docs/concepts/index.md)
 
-## Related Projects
-
-- [Bub](https://github.com/bubbuild/bub): hook-first agent runtime used by one AgentSeek template path.
-- [ContextSeek](https://github.com/ob-labs/contextseek): semantic memory, retrieval, and MCP integration.
-- [agentseek-api](https://github.com/ob-labs/agentseek-api): Agent Protocol server for production LangGraph serving.
-- [langchain-oceanbase](https://github.com/oceanbase/langchain-oceanbase): OceanBase-backed LangGraph checkpointing, store, vector search, and hybrid search.
-
 ## Development
 
 ```bash
