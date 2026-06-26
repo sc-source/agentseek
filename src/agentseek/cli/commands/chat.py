@@ -3,14 +3,15 @@
 from __future__ import annotations
 
 import asyncio
+from typing import Annotated
 
 import typer
 
 
 def chat(
     ctx: typer.Context,
-    chat_id: str = typer.Option("local", "--chat-id", help="Chat id"),
-    session_id: str | None = typer.Option(None, "--session-id", help="Optional session id"),
+    chat_id: Annotated[str, typer.Option("--chat-id", help="Chat id")] = "local",
+    session_id: Annotated[str | None, typer.Option("--session-id", help="Optional session id")] = None,
 ) -> None:
     """Start an interactive CLI chat session."""
     from bub.channels.cli import CliChannel

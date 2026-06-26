@@ -144,3 +144,7 @@ def test_agent_command_layout_starts_chat_when_confirmed(monkeypatch) -> None:
 
     assert result.exit_code == 0
     assert called is True
+
+
+def test_chat_defaults_are_plain_values_for_direct_agent_mode_call() -> None:
+    assert chat_module.chat.__defaults__ == ("local", None)
