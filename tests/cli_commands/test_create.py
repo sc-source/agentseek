@@ -304,6 +304,35 @@ def test_create_with_explicit_template_invokes_cookiecutter(monkeypatch, tmp_pat
     _assert_next_steps(result.output, project_path="fake-project")
 
 
+def test_create_with_output_dir_invokes_cookiecutter_in_selected_directory(monkeypatch, tmp_path: Path) -> None:
+    captured: dict[str, object] = {}
+    output_dir = Path("generated")
+
+    def fake_runner(source: TemplateSource, *, output_dir: Path, no_input: bool) -> Path:
+        captured["source"] = source
+        captured["output_dir"] = output_dir
+        captured["no_input"] = no_input
+        target = output_dir / "fake-project"
+        target.mkdir(parents=True, exist_ok=True)
+        return target
+
+    monkeypatch.setattr(create_module, "_run_cookiecutter", fake_runner)
+    monkeypatch.chdir(tmp_path)
+
+    result = _runner().invoke(
+        build_command_app(),
+        ["create", "deepagents", "--template", "default", "--output-dir", str(output_dir), "--no-input"],
+    )
+
+    assert result.exit_code == 0, result.output
+    source = captured["source"]
+    assert isinstance(source, TemplateSource)
+    assert "deepagents" in source.template and "default" in source.template
+    assert captured["output_dir"] == output_dir
+    assert captured["no_input"] is True
+    _assert_next_steps(result.output, project_path="generated/fake-project")
+
+
 def test_create_with_slash_spec_invokes_cookiecutter(monkeypatch, tmp_path: Path) -> None:
     """``agentseek create bub/default --no-input`` should resolve correctly."""
     captured: dict[str, object] = {}
@@ -336,6 +365,8 @@ def test_create_with_url_spec_passes_through(monkeypatch, tmp_path: Path) -> Non
 
     def fake_runner(source: TemplateSource, *, output_dir: Path, no_input: bool) -> Path:
         captured["source"] = source
+        captured["output_dir"] = output_dir
+        captured["no_input"] = no_input
         target = output_dir / "external project"
         target.mkdir(parents=True, exist_ok=True)
         return target
@@ -352,7 +383,48 @@ def test_create_with_url_spec_passes_through(monkeypatch, tmp_path: Path) -> Non
     source = captured["source"]
     assert isinstance(source, TemplateSource)
     assert source.template == "https://github.com/foo/bar.git"
+    assert captured["output_dir"] == tmp_path
+    assert captured["no_input"] is True
     _assert_next_steps(result.output, project_path="external project", cd_path="'external project'")
+
+
+def test_create_with_url_spec_and_output_dir_passes_selected_directory(monkeypatch, tmp_path: Path) -> None:
+    captured: dict[str, object] = {}
+    output_dir = Path("external-output")
+
+    def fake_runner(source: TemplateSource, *, output_dir: Path, no_input: bool) -> Path:
+        captured["source"] = source
+        captured["output_dir"] = output_dir
+        captured["no_input"] = no_input
+        target = output_dir / "external project"
+        target.mkdir(parents=True, exist_ok=True)
+        return target
+
+    monkeypatch.setattr(create_module, "_run_cookiecutter", fake_runner)
+    monkeypatch.chdir(tmp_path)
+
+    result = _runner().invoke(
+        build_command_app(),
+        [
+            "create",
+            "https://github.com/foo/bar.git",
+            "--output-dir",
+            str(output_dir),
+            "--no-input",
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    source = captured["source"]
+    assert isinstance(source, TemplateSource)
+    assert source.template == "https://github.com/foo/bar.git"
+    assert captured["output_dir"] == output_dir
+    assert captured["no_input"] is True
+    _assert_next_steps(
+        result.output,
+        project_path="external-output/external project",
+        cd_path="'external-output/external project'",
+    )
 
 
 # -- --describe mode -------------------------------------------------------

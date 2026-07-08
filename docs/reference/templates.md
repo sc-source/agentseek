@@ -3,7 +3,7 @@ title: Templates
 type: reference
 audience: [A1, A2]
 runs: no
-verified_on: 2026-06-23
+verified_on: 2026-07-07
 sources:
   - templates/index.json
   - src/agentseek/cli/commands/create.py
@@ -46,4 +46,5 @@ sources:
 | `agentseek create bub` | Resolve to `bub/default`. |
 | `agentseek create bub/default` | Use the specific template. |
 | `agentseek create bub --template default` | Use `bub/default`. |
+| `agentseek create bub/default --output-dir ./generated` | Write the generated project below the selected directory. |
 | `agentseek create --template` | Compatibility entry point that lists templates. Prefer `--list-templates` in new scripts. |

@@ -21,6 +21,7 @@ Spec resolution:
 * ``agentseek create bub --template default``         — same as ``bub/default``.
 * ``agentseek create bub --template``                 — list templates for the type (same as --list-templates).
 * ``agentseek create --template``                     — list all templates across all types.
+* ``agentseek create deepagents --output-dir /tmp``   — write the generated project under /tmp.
 * ``agentseek create https://github.com/x/y.git``    — passthrough to cookiecutter.
 * ``agentseek create /path/to/template``              — passthrough to cookiecutter.
 """
@@ -392,6 +393,12 @@ def _parse_argv(argv: list[str]) -> argparse.Namespace:
         help="Branch, tag, or commit to checkout when fetching from a remote repository.",
     )
     parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="Directory where the generated project should be written.",
+    )
+    parser.add_argument(
         "--list-templates",
         action="store_true",
         help="List templates available for the chosen type and exit.",
@@ -487,8 +494,9 @@ def _handle_external_spec(args: argparse.Namespace) -> None:
         directory=args.template,  # --template doubles as directory for external
         checkout=args.checkout,
     )
-    generated = _run_cookiecutter(source, output_dir=Path.cwd(), no_input=args.no_input)
-    _print_created_next_steps(generated, output_dir=Path.cwd())
+    output_dir = args.output_dir if args.output_dir is not None else Path.cwd()
+    generated = _run_cookiecutter(source, output_dir=output_dir, no_input=args.no_input)
+    _print_created_next_steps(generated, base_dir=Path.cwd())
 
 
 # ---------------------------------------------------------------------------
@@ -500,6 +508,7 @@ def _handle_external_spec(args: argparse.Namespace) -> None:
 def create(ctx: typer.Context) -> None:
     """Scaffold a new agent project from a pre-built template."""
     args = _parse_new_args(ctx)
+    output_dir = args.output_dir if args.output_dir is not None else Path.cwd()
 
     # --- External spec (URL or absolute path) → passthrough to cookiecutter ---
     if args.spec and _is_external_spec(args.spec):
@@ -549,8 +558,8 @@ def create(ctx: typer.Context) -> None:
         _describe_template(source, templates_root=templates_root)
         return
 
-    generated = _run_cookiecutter(source, output_dir=Path.cwd(), no_input=args.no_input)
-    _print_created_next_steps(generated, output_dir=Path.cwd())
+    generated = _run_cookiecutter(source, output_dir=output_dir, no_input=args.no_input)
+    _print_created_next_steps(generated, base_dir=Path.cwd())
 
 
 def _parse_new_args(ctx: typer.Context) -> argparse.Namespace:
@@ -604,10 +613,10 @@ def _show_templates(project_type: str | None, *, checkout: str | None = None) ->
     typer.echo()
 
 
-def _print_created_next_steps(generated: Path | None, *, output_dir: Path) -> None:
+def _print_created_next_steps(generated: Path | None, *, base_dir: Path) -> None:
     if generated is None:
         return
-    display_path = _display_generated_path(generated, output_dir=output_dir)
+    display_path = _display_generated_path(generated, base_dir=base_dir)
     typer.echo(f"Created {display_path}")
     typer.echo()
     typer.echo("Next:")
@@ -617,9 +626,9 @@ def _print_created_next_steps(generated: Path | None, *, output_dir: Path) -> No
     typer.echo("  agentseek doctor")
 
 
-def _display_generated_path(generated: Path, *, output_dir: Path) -> str:
+def _display_generated_path(generated: Path, *, base_dir: Path) -> str:
     try:
-        return str(generated.resolve().relative_to(output_dir.resolve()))
+        return str(generated.resolve().relative_to(base_dir.resolve()))
     except ValueError:
         return str(generated)
 
