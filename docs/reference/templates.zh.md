@@ -42,6 +42,7 @@ sources:
 | --- | --- |
 | `agentseek create` | 交互式选择类型和模板。 |
 | `agentseek create --list-templates` | 列出所有已知模板。 |
+| `agentseek create --list-templates --filter rag` | 只列出 spec 或描述匹配 `rag` 的模板。 |
 | `agentseek create bub --list-templates` | 只列出 `bub` 模板。 |
 | `agentseek create bub` | 解析到 `bub/default`。 |
 | `agentseek create bub/default` | 使用指定模板。 |

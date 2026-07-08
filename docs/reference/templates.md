@@ -42,6 +42,7 @@ sources:
 | --- | --- |
 | `agentseek create` | Select the type and template interactively. |
 | `agentseek create --list-templates` | List all known templates. |
+| `agentseek create --list-templates --filter rag` | List only templates whose spec or description matches `rag`. |
 | `agentseek create bub --list-templates` | List only `bub` templates. |
 | `agentseek create bub` | Resolve to `bub/default`. |
 | `agentseek create bub/default` | Use the specific template. |
