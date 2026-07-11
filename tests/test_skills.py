@@ -22,9 +22,7 @@ def test_skill_markdown_files_are_utf8_without_bom() -> None:
 
 def test_langchain_guide_uses_current_deepseek_v4_model() -> None:
     """Troubleshooting examples should not use a retiring model alias."""
-    guide = (
-        SKILLS_ROOT / "langchain-dev-guide" / "reference" / "common-issues.md"
-    ).read_text(encoding="utf-8")
+    guide = (SKILLS_ROOT / "langchain-dev-guide" / "reference" / "common-issues.md").read_text(encoding="utf-8")
 
     assert 'model="deepseek-reasoner"' not in guide
     assert 'model="deepseek-v4-flash"' in guide
